@@ -12,7 +12,7 @@
             display: flex; height: 100vh; 
         }
 
-        /* --- НОВ НАЧАЛЕН ЕКРАН --- */
+        /* НАЧАЛЕН ЕКРАН */
         #intro-screen { 
             position: fixed; inset: 0; 
             background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%); 
@@ -31,14 +31,14 @@
 
         .subtitle {
             font-size: 26px; font-weight: 700;
-            margin-bottom: 60px; /* Повече въздух */
+            margin-bottom: 60px; 
             letter-spacing: 5px; text-transform: uppercase;
             text-shadow: 1px 2px 4px rgba(0,0,0,0.3);
         }
 
         .intro-buttons {
-            display: flex; gap: 30px; /* Въздух между бутоните */
-            margin-bottom: 80px; /* Въздух до името */
+            display: flex; gap: 30px; 
+            margin-bottom: 80px; 
             flex-wrap: wrap; justify-content: center;
         }
 
@@ -54,30 +54,23 @@
         .btn-rules { background: #00a8ff; color: white; }
         .btn-start { background: #fff; color: #ff4e50; font-size: 22px; padding: 18px 50px;}
 
-        /* НОВ АВТОРСКИ БАДЖ */
         .author-badge {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px 40px;
-            border-radius: 40px;
-            font-size: 20px;
-            font-weight: bold;
-            letter-spacing: 1.5px;
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.2); padding: 15px 40px; border-radius: 40px;
+            font-size: 20px; font-weight: bold; letter-spacing: 1.5px; backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.4); box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
-        /* МОДАЛ ЗА ПРАВИЛА */
-        #rules-modal {
+        /* МОДАЛИ */
+        #rules-modal, #bulk-modal {
             display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
             z-index: 5001; align-items: center; justify-content: center; padding: 20px;
         }
-        .rules-content {
+        #bulk-modal { z-index: 7000; }
+        .rules-content, .bulk-content {
             background: white; width: 100%; max-width: 600px; border-radius: 20px; padding: 40px; 
-            position: relative; color: #333; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            font-size: 18px;
+            position: relative; color: #333; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-size: 18px;
         }
+        .bulk-content { max-width: 800px; }
 
         /* УЧИТЕЛСКИ ПАНЕЛ */
         #teacher-overlay {
@@ -99,7 +92,7 @@
         .q-row input { flex: 1; }
         .q-row select { width: 150px; background: #e3f2fd; font-weight: bold;}
         .del-btn { position: absolute; top: 10px; right: 10px; background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold;}
-        .add-btn { background: #4cd137; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; display: block; width: 100%; margin-top: 10px; }
+        .add-btn { background: #4cd137; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; flex: 1; }
         
         .save-btn { background: #4cd137; color: white; padding: 10px 25px; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; }
         .cancel-btn { background: #ff4d4d; color: white; padding: 10px 25px; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-right: 10px; }
@@ -145,13 +138,11 @@
     <div id="intro-screen">
         <div class="relief-title">КЪСМЕТ ИЛИ РИСК</div>
         <div class="subtitle">УНИВЕРСАЛЕН ШАБЛОН</div>
-        
         <div class="intro-buttons">
             <button class="btn-intro btn-teacher" onclick="openTeacherPanel()">⚙️ УЧИТЕЛ</button>
             <button class="btn-intro btn-rules" onclick="toggleRules()">📜 ПРАВИЛА</button>
             <button class="btn-intro btn-start" onclick="startGame()">🚀 ЗАПОЧНИ ИГРА</button>
         </div>
-        
         <div class="author-badge">🌟 Автор: Дочка Кючукова</div>
     </div>
 
@@ -170,6 +161,29 @@
         </div>
     </div>
 
+    <div id="bulk-modal">
+        <div class="bulk-content">
+            <h2 id="bulk-title" style="margin-top:0; color:#00a8ff;">БЪРЗО ДОБАВЯНЕ</h2>
+            <p style="font-size:15px; color:#555; margin-bottom: 10px;">Копирайте въпросите си от Word и ги поставете тук. Всеки въпрос трябва да има <strong>точно 6 реда</strong>. Между въпросите оставяйте <strong>празен ред</strong>:</p>
+            
+            <div style="background:#e3f2fd; padding:15px; border-radius:8px; font-family:monospace; font-size:14px; margin-bottom:15px;">
+                Въпрос?<br>
+                Отговор 1<br>
+                Отговор 2<br>
+                Отговор 3<br>
+                Номер на верния отговор (напишете само цифрата 1, 2 или 3)<br>
+                Обяснение при верен отговор (ако нямате, напишете тире "-")
+            </div>
+
+            <textarea id="bulk-textarea" placeholder="Поставете въпросите тук..." style="width:100%; height:200px; padding:15px; font-family:inherit; border:2px solid #ccc; border-radius:8px; margin-bottom:15px; box-sizing:border-box; font-size:16px;"></textarea>
+            
+            <div style="display:flex; justify-content:flex-end; gap:10px;">
+                <button onclick="closeBulkModal()" style="padding:12px 25px; border:none; border-radius:8px; background:#ff4d4d; color:white; font-weight:bold; cursor:pointer;">ОТКАЗ</button>
+                <button onclick="processBulkImport()" style="padding:12px 25px; border:none; border-radius:8px; background:#4cd137; color:white; font-weight:bold; cursor:pointer;">📥 ЗАРАДИ ВЪПРОСИТЕ</button>
+            </div>
+        </div>
+    </div>
+
     <div id="teacher-overlay">
         <div class="teacher-header">
             <h2>⚙️ НАСТРОЙКИ НА ИГРАТА</h2>
@@ -182,20 +196,25 @@
             
             <div class="t-section">
                 <h3>ИМЕНА НА ОТБОРИТЕ</h3>
-                <div class="team-inputs" id="teams-container">
-                    </div>
+                <div class="team-inputs" id="teams-container"></div>
             </div>
 
             <div class="t-section">
                 <h3>🟢 ОБИКНОВЕНИ ВЪПРОСИ (За точки, Защита и Крадец)</h3>
                 <div id="normal-qs-container"></div>
-                <button class="add-btn" onclick="addQuestionUI('normal-qs-container', 'normal')">➕ ДОБАВИ НОВ ОБИКНОВЕН ВЪПРОС</button>
+                <div style="display: flex; gap: 15px; margin-top: 15px;">
+                    <button class="add-btn" onclick="addQuestionUI('normal-qs-container', 'normal')">➕ ДОБАВИ 1 ВЪПРОС</button>
+                    <button class="add-btn" style="background: #00a8ff;" onclick="openBulkModal('normal')">📥 БЪРЗО ДОБАВЯНЕ ОТ ТЕКСТ</button>
+                </div>
             </div>
 
             <div class="t-section">
                 <h3>🔴 ТРУДНИ ВЪПРОСИ (За спасение при БАНКРУТ)</h3>
                 <div id="hard-qs-container"></div>
-                <button class="add-btn" onclick="addQuestionUI('hard-qs-container', 'hard')">➕ ДОБАВИ НОВ ТРУДЕН ВЪПРОС</button>
+                <div style="display: flex; gap: 15px; margin-top: 15px;">
+                    <button class="add-btn" onclick="addQuestionUI('hard-qs-container', 'hard')">➕ ДОБАВИ 1 ВЪПРОС</button>
+                    <button class="add-btn" style="background: #00a8ff;" onclick="openBulkModal('hard')">📥 БЪРЗО ДОБАВЯНЕ ОТ ТЕКСТ</button>
+                </div>
             </div>
 
         </div>
@@ -248,15 +267,11 @@
 
     const defaultTeams = ["ЛЪВОВЕ", "ОРЛИ", "КОННИЦИ", "БОЛЯРИ"];
     const defaultNormalQs = [
-        { q: "Кой древен народ е изработил Панагюрското златно съкровище?", a: ["Траките", "Славяните", "Прабългарите"], c: 0, info: "💡 ЛЮБОПИТНО: Траките са били едни от най-добрите златари в света!" },
-        { q: "Как се е наричал легендарният тракийски певец?", a: ["Спартак", "Орфей", "Севт"], c: 1, info: "💡 ЛЕГЕНДА: Казват, че музиката му била толкова вълшебна, че дори дивите зверове утихвали." },
-        { q: "Къде са живеели славяните?", a: ["В пещери", "Край реки и езера", "В каменни градове"], c: 1, info: "💡 ЗНАЕШ ЛИ, ЧЕ: Те са строели жилищата си до вода, за да се спасяват от врагове." },
-        { q: "Кой е основният бог на славяните?", a: ["Перун", "Тангра", "Зевс"], c: 0, info: "💡 ВЯРВАНИЯ: Перун е бил господар на гръмотевиците." },
-        { q: "Кой хан е създател на Стара Велика България?", a: ["Хан Крум", "Хан Кубрат", "Хан Аспарух"], c: 1, info: "💡 КОНТЕКСТ: Хан Кубрат е бил изключително уважаван." }
+        { q: "Кой древен народ е изработил Панагюрското златно съкровище?", a: ["Траките", "Славяните", "Прабългарите"], c: 0, info: "Траките са били едни от най-добрите златари в света!" },
+        { q: "Как се е наричал легендарният тракийски певец?", a: ["Спартак", "Орфей", "Севт"], c: 1, info: "Казват, че музиката му била толкова вълшебна, че дори дивите зверове утихвали." }
     ];
     const defaultHardQs = [
-        { q: "Синът на Борис I, опитал да върне езичеството?", a: ["Симеон", "Владимир Расате", "Гаврил"], c: 1, info: "💡 ДРАМА: Борис I трябвало да свали собствения си син." },
-        { q: "Година на Преславския събор?", a: ["893 г.", "864 г.", "927 г."], c: 0, info: "💡 РЕШЕНИЯ: Тогава столицата се мести в Преслав." }
+        { q: "Година на Преславския събор?", a: ["893 г.", "864 г.", "927 г."], c: 0, info: "Тогава столицата се мести в Преслав." }
     ];
 
     let teamNames = [];
@@ -284,19 +299,16 @@
     loadData();
 
     function updateTeamUI() {
-        for(let i=0; i<4; i++) {
-            document.getElementById(`name-${i}`).innerText = teamNames[i];
-        }
+        for(let i=0; i<4; i++) document.getElementById(`name-${i}`).innerText = teamNames[i];
         document.getElementById('turn-indicator').innerText = `РЕД Е НА: ${teamNames[turnIdx]}`;
     }
 
+    // --- УЧИТЕЛСКИ ПАНЕЛ И БЪРЗ ИМПОРТ ---
     function openTeacherPanel() {
         document.getElementById('teacher-overlay').style.display = 'flex';
         const teamsCont = document.getElementById('teams-container');
         teamsCont.innerHTML = '';
-        teamNames.forEach((t, i) => {
-            teamsCont.innerHTML += `<input type="text" id="edit-team-${i}" value="${t}">`;
-        });
+        teamNames.forEach((t, i) => { teamsCont.innerHTML += `<input type="text" id="edit-team-${i}" value="${t}">`; });
         renderQuestionsUI('normal-qs-container', normalQs, 'normal');
         renderQuestionsUI('hard-qs-container', hardQs, 'hard');
     }
@@ -306,12 +318,11 @@
     function renderQuestionsUI(containerId, qArray, typeClass) {
         const cont = document.getElementById(containerId);
         cont.innerHTML = '';
-        qArray.forEach((q, idx) => { addQuestionBlock(cont, q, typeClass); });
+        qArray.forEach(q => addQuestionBlock(cont, q, typeClass));
     }
 
     function addQuestionUI(containerId, typeClass) {
-        const cont = document.getElementById(containerId);
-        addQuestionBlock(cont, { q: "", a: ["", "", ""], c: 0, info: "" }, typeClass);
+        addQuestionBlock(document.getElementById(containerId), { q: "", a: ["", "", ""], c: 0, info: "" }, typeClass);
     }
 
     function addQuestionBlock(container, qData, typeClass) {
@@ -330,19 +341,58 @@
                     <option value="2" ${qData.c == 2 ? 'selected' : ''}>Отг. 3 е верен</option>
                 </select>
             </div>
-            <input type="text" class="in-info" placeholder="Допълнителна информация (показва се при помощ или след отговор)..." value="${qData.info.replace(/"/g, '&quot;')}">
+            <input type="text" class="in-info" placeholder="Допълнителна информация (или оставете празно)..." value="${qData.info.replace(/"/g, '&quot;')}">
         `;
         container.appendChild(div);
     }
 
+    let currentBulkType = '';
+    function openBulkModal(type) {
+        currentBulkType = type;
+        document.getElementById('bulk-title').innerText = type === 'normal' ? '🟢 БЪРЗО ДОБАВЯНЕ: ОБИКНОВЕНИ ВЪПРОСИ' : '🔴 БЪРЗО ДОБАВЯНЕ: ТРУДНИ ВЪПРОСИ';
+        document.getElementById('bulk-textarea').value = '';
+        document.getElementById('bulk-modal').style.display = 'flex';
+    }
+
+    function closeBulkModal() { document.getElementById('bulk-modal').style.display = 'none'; }
+
+    function processBulkImport() {
+        const text = document.getElementById('bulk-textarea').value.trim();
+        if(!text) return closeBulkModal();
+        
+        // Разделяме текста по празни редове (един или повече)
+        const blocks = text.split(/\n\s*\n/);
+        let count = 0;
+        
+        blocks.forEach(block => {
+            const lines = block.split('\n').map(l => l.trim()).filter(l => l !== '');
+            if(lines.length >= 5) {
+                const qData = {
+                    q: lines[0],
+                    a: [lines[1], lines[2], lines[3]],
+                    c: (parseInt(lines[4]) || 1) - 1,
+                    info: lines.length >= 6 ? lines[5] : ""
+                };
+                // Проверки за валидност
+                if(qData.c < 0 || qData.c > 2) qData.c = 0;
+                if(qData.info === '-') qData.info = '';
+                
+                const containerId = currentBulkType === 'normal' ? 'normal-qs-container' : 'hard-qs-container';
+                addQuestionBlock(document.getElementById(containerId), qData, currentBulkType);
+                count++;
+            }
+        });
+        
+        alert(`Успешно добавени ${count} въпроса в списъка зад този прозорец!\nКогато сте готови, не забравяйте да натиснете "ЗАПАЗИ И ЗАТВОРИ".`);
+        closeBulkModal();
+    }
+
     function saveTeacherPanel() {
-        for(let i=0; i<4; i++) {
-            teamNames[i] = document.getElementById(`edit-team-${i}`).value || `Отбор ${i+1}`;
-        }
+        for(let i=0; i<4; i++) teamNames[i] = document.getElementById(`edit-team-${i}`).value || `Отбор ${i+1}`;
+        
         const extractQs = (containerId) => {
             const arr = [];
-            const blocks = document.getElementById(containerId).querySelectorAll('.q-card');
-            blocks.forEach(b => {
+            document.getElementById(containerId).querySelectorAll('.q-card').forEach(b => {
                 const qText = b.querySelector('.in-q').value.trim();
                 if(!qText) return; 
                 arr.push({
@@ -363,16 +413,14 @@
 
         localStorage.setItem('luckRiskData', JSON.stringify({ teams: teamNames, normalQs: normalQs, hardQs: hardQs }));
 
-        poolNormal = [...normalQs];
-        poolHard = [...hardQs];
-        totalQuestionsAsked = 0;
-        document.getElementById('q-count').innerText = "0";
+        poolNormal = [...normalQs]; poolHard = [...hardQs];
+        totalQuestionsAsked = 0; document.getElementById('q-count').innerText = "0";
         
-        updateTeamUI();
-        closeTeacherPanel();
+        updateTeamUI(); closeTeacherPanel();
         alert("Промените са запазени успешно!");
     }
 
+    // --- ЛОГИКА НА ИГРАТА ---
     function toggleRules() {
         const m = document.getElementById('rules-modal');
         m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
@@ -444,9 +492,7 @@
         let pool = (type === 'survival') ? poolHard : poolNormal;
         if(pool.length === 0) { 
              document.getElementById('q-text').innerText = "Всички въпроси от тази категория са изчерпани!";
-             document.getElementById('next-btn').style.display = 'block';
-             document.getElementById('next-btn').onclick = closeModal;
-             return;
+             document.getElementById('next-btn').style.display = 'block'; document.getElementById('next-btn').onclick = closeModal; return;
         }
         const rIdx = Math.floor(Math.random() * pool.length); const q = pool[rIdx]; pool.splice(rIdx, 1);
         document.getElementById('q-text').innerText = q.q; const opt = document.getElementById('options'); opt.innerHTML = '';
@@ -484,15 +530,8 @@
     function startTimer() { timeLeft = 30; document.getElementById('timer-display').innerText = `0:${timeLeft}`; timerInterval = setInterval(() => { timeLeft--; document.getElementById('timer-display').innerText = `0:${timeLeft < 10 ? '0'+timeLeft : timeLeft}`; if(timeLeft <= 0) { clearInterval(timerInterval); scores[turnIdx] = 0; closeModal(); } }, 1000); }
 
     function closeModal() { 
-        document.getElementById('modal-overlay').style.display = 'none'; 
-        turnIdx = (turnIdx + 1) % 4; 
-        updateUI(); 
-        document.getElementById('main-action-btn').disabled = false; 
-        
-        if(poolNormal.length === 0 && poolHard.length === 0) { 
-            document.getElementById('main-action-btn').innerText = "КЪМ ФИНАЛА"; 
-            document.getElementById('main-action-btn').onclick = endGame; 
-        } 
+        document.getElementById('modal-overlay').style.display = 'none'; turnIdx = (turnIdx + 1) % 4; updateUI(); document.getElementById('main-action-btn').disabled = false; 
+        if(poolNormal.length === 0 && poolHard.length === 0) { document.getElementById('main-action-btn').innerText = "КЪМ ФИНАЛА"; document.getElementById('main-action-btn').onclick = endGame; } 
     }
 
     function updateUI() { 
